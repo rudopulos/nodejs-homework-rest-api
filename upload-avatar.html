@@ -11,5 +11,33 @@
     <input type="file" name="avatar" accept="image/*">
     <button type="submit">Upload</button>
   </form>
+
+  <!-- Formular pentru verificarea e-mailului -->
+  <h2>Verify Email</h2>
+  <form id="verifyForm">
+    <input type="email" id="email" name="email" placeholder="Enter your email">
+    <button type="submit">Send Verification Email</button>
+  </form>
+
+  <script>
+    document.getElementById('verifyForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const email = document.getElementById('email').value;
+      try {
+        const response = await fetch('http://localhost:3000/users/verify', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email })
+        });
+        const data = await response.json();
+        alert(data.message); // Afișează mesajul din răspunsul serverului
+      } catch (error) {
+        console.error('Error sending verification email:', error);
+        alert('Error sending verification email');
+      }
+    });
+  </script>
 </body>
 </html>
